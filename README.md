@@ -9,16 +9,25 @@ Alunos:
   - Otávio Almeida Leite
   - Paulo Kiyoshi Oyama Filho
 
-## Primeira Entrega
-### Concepção do Sistema
-O Turistando é um aplicativo de visualização de pontos turístios e planajamento de viagens.
+## Concepção do Sistema
+O Turistando é um aplicativo de visualização de pontos turísticos e planejamento de viagens.
 
 Por meio dele, os usuários podem ver em um mapa os pontos turísticos e sua localização para montar um tour a se fazer por eles.
 Nisso, os tours criados por usuário se tornam públicos para que qualquer outro usuário possa visualizá-lo.
 
-![](/images/rabisco_telas.jpg)
+<html>
+  <div display="flex" flex-direction="row">
+    <img src="./images/telas1.jpg" width="48%" height="375">
+    <img src="./images/telas2.jpg" width="48%" height="375">
+  </div>
+  <div display="flex" flex-direction="row">
+    <img src="./images/telas3.jpg" width="48%" height="375">
+    <img src="./images/telas4.jpg" width="48%" height="375">
+  </div>
+  <img src="./images/telas5.jpg" width="48%" height="375">
+</html>
 
-### Definição do Ferramental a ser Utilizado
+## Definição do Ferramental a ser Utilizado
 - Front-end mobile: Linguagem Dart com Framework Flutter
 - Back-end: Linguagem Python com Framework FastAPI
 - Banco de Dados: Postgres
@@ -27,16 +36,16 @@ Nisso, os tours criados por usuário se tornam públicos para que qualquer outro
 - Prototipação de Interface: Figma
 - Criação de Diagramas: Diagrams.net
 
-### Requisitos Preliminares do Sistema
+## Requisitos Preliminares do Sistema
 
 - O app deve pegar a localização atual do usuário(apenas a nível de qual cidade).
 - Deve ser possível visualizar locais em uma determinada região.
 - O usuário precisará criar uma conta para utilizar o app.
 - Na criação da conta, será necessário: nome, e-mail, telefone e senha.
-- O usuário poderá criar, listas de lugares(tours), que serão visíveis para outros usuários.
+- O usuário poderá criar listas de lugares(tours), que serão visíveis para outros usuários.
 - A aplicação deverá rodar em smartphones Android e iOS.
 
-### Planejamento
+## Planejamento
 
 O planejamento está sendo feito no Notion e pode ser visualizado pelo seguinte link:
 
