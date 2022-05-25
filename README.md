@@ -30,11 +30,11 @@ Nisso, os tours criados por usuário se tornam públicos para que qualquer outro
 ## Definição do Ferramental a ser Utilizado
 - Front-end mobile: Linguagem Dart com Framework Flutter
 - Back-end: Linguagem Python com Framework FastAPI
-- Banco de Dados: Postgres
+- Banco de Dados: PostgreSQL
 - Versionamento: Git com GitHub
 - Organização e Planejamento do Projeto: Notion
 - Prototipação de Interface: Figma
-- Criação de Diagramas: Diagrams.net
+- Criação de Diagramas: Diagrams.net, dbdiagram.io
 
 ## Requisitos Preliminares do Sistema
 
@@ -49,4 +49,4 @@ Nisso, os tours criados por usuário se tornam públicos para que qualquer outro
 
 O planejamento está sendo feito no Notion e pode ser visualizado pelo seguinte link:
 
-https://gainful-suede-bbf.notion.site/Engenharia-de-Software-9e9a768c8efa48bbadb0fed14512f972
+[Notion - Engenharia de Software](https://gainful-suede-bbf.notion.site/Engenharia-de-Software-9e9a768c8efa48bbadb0fed14512f972)
