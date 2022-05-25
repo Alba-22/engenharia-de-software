@@ -27,6 +27,11 @@ Nisso, os tours criados por usuário se tornam públicos para que qualquer outro
   <img src="./images/telas5.jpg" width="48%" height="375">
 </html>
 
+## Diferencial Competitivo
+Como principal diferencial o Turistando possui a personalização de tours turísticos que podem ser feitos por qualquer um , podendo assim incluir viajantes experientes ou nativos da região, dispensando um guia turístico uma vez que a rota já estará pronta através do GPS, eliminado o custo do guia e de um planejamento turístico.
+
+O Turistando também possuirá um sistema de gamificação que beneficiará aqueles que criarem os melhores tours dentro do app , incentivando assim tours mais bem elaborados ou desejados pela comunidade. 
+
 ## Definição do Ferramental a ser Utilizado
 - Front-end mobile: Linguagem Dart com Framework Flutter
 - Back-end: Linguagem Python com Framework FastAPI
@@ -44,6 +49,48 @@ Nisso, os tours criados por usuário se tornam públicos para que qualquer outro
 - Na criação da conta, será necessário: nome, e-mail, telefone e senha.
 - O usuário poderá criar listas de lugares(tours), que serão visíveis para outros usuários.
 - A aplicação deverá rodar em smartphones Android e iOS.
+
+## Especificiação dos Casos de Uso
+### Caso de uso : fazer cadastro
+Atores : Usuário
+- Caso de sucesso:
+  1. Usuário preenche campos de nome , email, senha e telefone 
+  2. Sistema salva dados
+- Extensão:
+  1. E-mail já registrado no banco
+    Mensagem de usuário já cadastrado
+  2. Falha no registro dos dados
+    Usuário re-insere os dados
+
+
+### Caso de uso: Fazer login
+Atores : Usuário
+- Caso de sucesso:
+  1. Usuário insere dados de login
+- Extensão:
+  1. Caso usuário não cadastrado
+    Mensagem de e-mail não cadastrado
+  2. Caso e-mail ou senha inválidos
+    Mensagem de dados incorretos
+
+### Caso de uso : Selecionar tour
+Atores: Usuário , API Google
+- Caso de sucesso:
+  1. Usuário ativa a localização no aparelho
+  2. Usuário Seleciona um local no mapa
+  3. API Google faz requisição ao maps
+  4. Usuário escolhe um tour da região
+- Extensão:
+  1. Falha ao ativar a localização
+    Permitir que o app possa usar o serviço de GPS através das configurações
+  2. Falha ao Selecionar um local
+    Exibir mensagem “Local Não Disponível ou sem Tour”
+  3. Falha na requisição da API
+    Sistema solicita no requisição
+  4. Falha ao escolher o Tour
+    Tour nao mais disponível ou em processo de mudança
+
+<img src="./images/usecases.png"  height="450">
 
 ## Planejamento
 
