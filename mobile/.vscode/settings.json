@@ -26,6 +26,5 @@
     "**/*desktop.ini": true,
     ".flutter-plugins": true,
     ".flutter-plugins-dependencies": true,
-  },
-  "dart.runPubGetOnPubspecChanges": false,
+  }
 }
