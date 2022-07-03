@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:ftoast/ftoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:turistando/app/core/components/buttons/common_button.dart';
 import 'package:turistando/app/core/components/buttons/reverse_button.dart';
 import 'package:turistando/app/core/components/fields/common_field.dart';
@@ -106,7 +107,9 @@ class _LoginPageState extends State<LoginPage> {
                     ReverseButton(
                       text: "CRIAR UMA CONTA",
                       width: double.infinity,
-                      onTap: () {},
+                      onTap: () {
+                        context.push("/register");
+                      },
                     ),
                   ],
                 ),

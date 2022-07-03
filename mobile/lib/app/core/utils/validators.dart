@@ -1,3 +1,4 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:email_validator/email_validator.dart';
 
 abstract class Validators {
@@ -26,6 +27,16 @@ abstract class Validators {
   static String? requiredValidator(String? value) {
     if (_isEmpty(value)) {
       return "O campo é obrigatório!";
+    }
+
+    return null;
+  }
+
+  static String? phoneValidator(String? value) {
+    if (_isEmpty(value)) {
+      return "O campo é obrigatório!";
+    } else if (UtilBrasilFields.removeCaracteres(value!).length < 10) {
+      return "Telefone inválido";
     }
 
     return null;
