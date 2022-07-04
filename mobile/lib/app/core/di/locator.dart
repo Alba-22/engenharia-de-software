@@ -6,12 +6,14 @@ import 'package:turistando/app/modules/login/login_store.dart';
 import 'package:turistando/app/modules/login/repositories/login_repository.dart';
 import 'package:turistando/app/modules/register/register_store.dart';
 import 'package:turistando/app/modules/register/repositories/register_repository.dart';
+import 'package:turistando/app/modules/splash/splash_store.dart';
 
 final locator = GetIt.instance;
 
 void setupLocator() {
   locator.registerFactory(() => const FlutterSecureStorage());
   locator.registerFactory<LocalStorageService>(() => SecureStorage(locator.get()));
+  locator.registerFactory(() => SplashStore(locator.get()));
   locator.registerFactory<LoginRepository>(() => LoginRepositoryImpl());
   locator.registerFactory(() => LoginStore(locator.get(), locator.get()));
   locator.registerFactory<RegisterRepository>(() => RegisterRepositoryImpl());

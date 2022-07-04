@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
     store.observer(
       onState: (LoginState state) {
         if (state is LoginSuccessState) {
-          // context.go("entry");
+          context.go("/entry");
         } else if (state is LoginErrorState) {
           FToast.toast(context, msg: state.message);
         }

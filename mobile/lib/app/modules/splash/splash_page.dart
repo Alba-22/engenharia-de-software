@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:turistando/app/core/di/locator.dart';
 import 'package:turistando/app/core/utils/constants.dart';
+
+import 'splash_store.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -10,12 +13,21 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  final store = locator.get<SplashStore>();
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 1)).then((value) {
-      context.go("/login");
-    });
+    store.manageSplash();
+    store.observer(
+      onState: (state) {
+        if (state is SplashEntryState) {
+          context.go("/entry");
+        } else if (state is SplashLoginState) {
+          context.go("/login");
+        }
+      },
+    );
   }
 
   @override

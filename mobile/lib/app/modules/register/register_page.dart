@@ -36,7 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
     store.observer(
       onState: (RegisterState state) {
         if (state is RegisterSuccessState) {
-          // context.go("entry")
+          context.go("entry");
         } else if (state is RegisterErrorState) {
           FToast.toast(context, msg: state.message);
         }
