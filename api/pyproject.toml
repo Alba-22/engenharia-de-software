@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "Turistando API"
+version = "0.1.0"
+description = "Trabalho de Engenharia de Software - Turistando: Sistema de Agregação de Pontos Turísticos baseado em Localização"
+authors = ["Otávio Leite <otavio.leite@ufu.br>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.78.0"
+SQLAlchemy = "^1.4.37"
+alembic = "^1.8.0"
+uvicorn = "^0.17.6"
+psycopg2-binary = "^2.9.3"
+PyJWT = "^2.4.0"
+bcrypt = "^3.2.2"
+
+[tool.poetry.dev-dependencies]
+black = "^22.3.0"
+mypy = "^0.961"
+pylint = "^2.14.3"
+pytest = "^7.1.2"
+bandit = "^1.7.4"
+flake8 = "^4.0.1"
+sqlalchemy2-stubs = "^0.0.2-alpha.24"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pylint.master]
+disable = [
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "invalid-name",
+    "too-few-public-methods"
+]
+
+[tool.pylint.SIMILARITIES]
+ignore-imports="yes"
+
+[tool.bandit]
+skips = ["B101"]
