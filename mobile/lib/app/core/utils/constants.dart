@@ -25,6 +25,8 @@ abstract class FWeight {
 abstract class StorageKeys {
   static const String accessToken = "access_token";
   static const String username = "username";
+  static const String lastLocationLatitude = "last_location_latitude";
+  static const String lastLocationLongitude = "last_location_longitude";
 }
 
 final initialLocation = LatLng(-18.916626, -48.274283);

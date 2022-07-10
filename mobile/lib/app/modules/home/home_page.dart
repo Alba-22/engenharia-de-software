@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:turistando/app/core/components/appbar/location_appbar.dart';
 import 'package:turistando/app/core/di/locator.dart';
 import 'package:turistando/app/core/store/location_store.dart';
+import 'package:turistando/app/core/store/places_store.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,13 +17,37 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final mapController = MapController();
   final locationStore = locator.get<LocationStore>();
+  final placesStore = locator.get<PlacesStore>();
+
+  List<Marker> markers = [];
 
   @override
   void initState() {
     super.initState();
     locationStore.addListener(() {
+      placesStore.getAllPlacesByLatLng(
+        locationStore.value.latitude,
+        locationStore.value.longitude,
+      );
       mapController.move(locationStore.value, 14);
     });
+    placesStore.observer(
+      onState: (state) {
+        markers = state.map((e) {
+          return Marker(
+            point: LatLng(e.latitude, e.longitude),
+            builder: (context) {
+              return const Icon(
+                Icons.location_pin,
+                color: Colors.red,
+                size: 20,
+              );
+            },
+          );
+        }).toList();
+        setState(() {});
+      },
+    );
   }
 
   @override
@@ -42,6 +68,9 @@ class _HomePageState extends State<HomePage> {
               ),
               rotationWinGestures: MultiFingerGesture.none,
               enableMultiFingerGestureRace: true,
+              plugins: [
+                MarkerClusterPlugin(),
+              ],
             ),
             mapController: mapController,
             layers: [
@@ -49,10 +78,27 @@ class _HomePageState extends State<HomePage> {
                 urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                 subdomains: ['a', 'b', 'c'],
               ),
+              MarkerClusterLayerOptions(
+                markers: markers,
+                builder: (context, markers) {
+                  return const Icon(
+                    Icons.location_pin,
+                    color: Colors.red,
+                    size: 20,
+                  );
+                },
+              ),
             ],
           );
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    locationStore.dispose();
+    placesStore.destroy();
+    super.dispose();
   }
 }
