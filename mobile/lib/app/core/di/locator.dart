@@ -2,7 +2,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:turistando/app/core/services/local_storage/local_storage_service.dart';
 import 'package:turistando/app/core/services/local_storage/secure_storage_service.dart';
-import 'package:turistando/app/core/services/location_store.dart';
+import 'package:turistando/app/core/store/location_store.dart';
 import 'package:turistando/app/modules/login/login_store.dart';
 import 'package:turistando/app/modules/login/repositories/login_repository.dart';
 import 'package:turistando/app/modules/register/register_store.dart';

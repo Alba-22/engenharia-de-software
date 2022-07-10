@@ -18,6 +18,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_map: 1.1.1
+  flutter_map_marker_cluster: 0.5.0
   flutter_secure_storage: 5.0.2
   flutter_svg: ^1.1.1+1
   flutter_triple: 1.2.7+2

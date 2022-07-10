@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:turistando/app/core/components/dialogs/select_location_dialog.dart';
 import 'package:turistando/app/core/di/locator.dart';
-import 'package:turistando/app/core/services/location_store.dart';
+import 'package:turistando/app/core/store/location_store.dart';
 import 'package:turistando/app/core/utils/constants.dart';
 import 'package:turistando/app/core/utils/custom_colors.dart';
 
@@ -37,7 +39,19 @@ class _LocationAppBarState extends State<LocationAppBar> {
         children: [
           Expanded(
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                showSelectLocationDialog(
+                  context,
+                  onTapCurrentLocation: () {
+                    locationStore.getUserLocation();
+                    Navigator.pop(context);
+                  },
+                  onTapPickOnMap: () {
+                    Navigator.pop(context);
+                    context.push("/pick-on-map");
+                  },
+                );
+              },
               child: Container(
                 height: 40,
                 decoration: BoxDecoration(

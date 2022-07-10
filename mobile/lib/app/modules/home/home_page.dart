@@ -3,7 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:turistando/app/core/components/appbar/location_appbar.dart';
 import 'package:turistando/app/core/di/locator.dart';
-import 'package:turistando/app/core/services/location_store.dart';
+import 'package:turistando/app/core/store/location_store.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

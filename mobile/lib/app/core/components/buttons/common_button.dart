@@ -33,16 +33,10 @@ class CommonButton extends StatelessWidget {
     Color? textColor;
     Color? loadingColor;
     Color? backgroundColor;
-    List<Shadow> shadows = [];
     if (onTap != null) {
       textColor = CColors.white;
       loadingColor = CColors.white;
       backgroundColor = CColors.primary;
-      shadows.add(Shadow(
-        blurRadius: 1,
-        offset: const Offset(0, 1),
-        color: Colors.black.withOpacity(0.25),
-      ));
     } else {
       textColor = CColors.white;
       loadingColor = CColors.white;
@@ -62,7 +56,7 @@ class CommonButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(borderSize),
             color: backgroundColor,
           ),
-          child: isLoading ? _buttonLoading(loadingColor) : _buttonContent(textColor, shadows),
+          child: isLoading ? _buttonLoading(loadingColor) : _buttonContent(textColor),
         ),
       ),
     );
@@ -81,7 +75,7 @@ class CommonButton extends StatelessWidget {
     );
   }
 
-  Widget _buttonContent(Color textColor, List<Shadow> shadows) {
+  Widget _buttonContent(Color textColor) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -96,7 +90,6 @@ class CommonButton extends StatelessWidget {
               color: textColor,
               fontSize: fontSize,
               fontWeight: FWeight.bold,
-              shadows: shadows,
             ),
           ),
         ),
