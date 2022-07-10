@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:turistando/app/core/utils/constants.dart';
+import 'package:turistando/app/core/utils/custom_colors.dart';
 import 'package:turistando/app/modules/home/home_page.dart';
 
 class EntryPage extends StatefulWidget {
@@ -32,6 +34,16 @@ class _EntryPageState extends State<EntryPage> {
           });
           pageController.jumpToPage(newIndex);
         },
+        unselectedLabelStyle: const TextStyle(
+          fontWeight: FWeight.bold,
+          color: CColors.gray,
+          fontSize: 12,
+        ),
+        selectedLabelStyle: const TextStyle(
+          fontWeight: FWeight.bold,
+          color: CColors.primary,
+          fontSize: 12,
+        ),
         items: const [
           BottomNavigationBarItem(
             label: "TOURS",
