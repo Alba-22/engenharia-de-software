@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:turistando/app/modules/home/home_page.dart';
 
 class EntryPage extends StatefulWidget {
   const EntryPage({Key? key}) : super(key: key);
@@ -9,16 +10,17 @@ class EntryPage extends StatefulWidget {
 
 class _EntryPageState extends State<EntryPage> {
   int currentIndex = 1;
-  final pageController = PageController();
+  final pageController = PageController(initialPage: 1);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         children: [
           Container(color: Colors.red),
-          Container(color: Colors.blue),
+          const HomePage(),
           Container(color: Colors.green),
         ],
       ),

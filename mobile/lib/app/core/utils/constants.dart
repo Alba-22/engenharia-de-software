@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
 
 abstract class Assets {
   static const String icons = "assets/icons";
@@ -25,3 +26,5 @@ abstract class StorageKeys {
   static const String accessToken = "access_token";
   static const String username = "username";
 }
+
+final initialLocation = LatLng(-18.916626, -48.274283);
