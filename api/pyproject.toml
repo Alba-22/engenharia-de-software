@@ -22,6 +22,7 @@ pytest = "^7.1.2"
 bandit = "^1.7.4"
 flake8 = "^4.0.1"
 sqlalchemy2-stubs = "^0.0.2-alpha.24"
+sqlalchemy-stubs = "^0.4"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -41,3 +42,9 @@ ignore-imports="yes"
 
 [tool.bandit]
 skips = ["B101"]
+
+[tool.mypy]
+plugins = [
+    "sqlalchemy.ext.mypy.plugin",
+    "pydantic.mypy"
+]

@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
-from app.routers.router import api_router
+from app.routers.login import api_router
 
 app = FastAPI(title="Turistando API")
 
