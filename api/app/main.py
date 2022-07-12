@@ -4,10 +4,11 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.core.db import get_db
-from app.routers.login import api_router
+from app import depend
+from app.response import NO_CONTENT, ResponseException, response_exception_handler
+from app.user import router as user_router
 
-app = FastAPI(title="Turistando API")
+app = FastAPI(title="Turistando API", version="Terno Rei")
 
 app.add_middleware(
     CORSMiddleware,
@@ -17,22 +18,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# TODO: exception handler
-# @app.exception_handler(ResponseException)
-# def response_error_handler(_: Request, exc: ResponseException):
-#     return JSONResponse(status_code=exc.code, content=exc.content)
+
+app.add_exception_handler(ResponseException, response_exception_handler)
 
 
 @app.exception_handler(Exception)
 def generic_exception_handler(_: Request, _exc: Exception):
-    """Torna uma exceção qualquer em uma reposta de Internal Server Error"""
-    return JSONResponse(status_code=500, content="Internal Server Error")
+    """Torna uma exceção qualquer em uma reposta de Internal Server Error."""
+
+    return JSONResponse(
+        status_code=500, content={"message": "Ocorreu um erro no servidor"}
+    )
 
 
-app.include_router(api_router)
+app.include_router(user_router, prefix="/user", tags=["user"])
 
 
-@app.get("/")
-def healthcheck(db: Session = Depends(get_db)):
+@app.get("/", status_code=204)
+def healthcheck(db: Session = Depends(depend.db)):
+    """Retorna `204` se o servidor estiver saudável."""
+
     db.execute(select(1))
-    return {"status": True}
+    return NO_CONTENT
