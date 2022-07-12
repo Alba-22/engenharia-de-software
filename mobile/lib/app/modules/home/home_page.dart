@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:turistando/app/core/components/appbar/location_appbar.dart';
+import 'package:turistando/app/core/components/appbar/location_appbar/location_appbar.dart';
 import 'package:turistando/app/core/di/locator.dart';
 import 'package:turistando/app/core/store/location_store.dart';
 import 'package:turistando/app/core/store/places_store.dart';
@@ -93,12 +93,5 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    locationStore.dispose();
-    placesStore.destroy();
-    super.dispose();
   }
 }

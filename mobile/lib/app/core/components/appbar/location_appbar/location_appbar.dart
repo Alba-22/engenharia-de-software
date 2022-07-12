@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:go_router/go_router.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:turistando/app/core/components/appbar/location_appbar/location_appbar_store.dart';
 import 'package:turistando/app/core/components/dialogs/select_location_dialog.dart';
 import 'package:turistando/app/core/di/locator.dart';
 import 'package:turistando/app/core/store/location_store.dart';
@@ -21,15 +20,15 @@ class LocationAppBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _LocationAppBarState extends State<LocationAppBar> {
   final locationStore = locator.get<LocationStore>();
-
-  String city = "Selecione uma localização".toUpperCase();
+  final locationAppBarStore = locator.get<LocationAppbarStore>();
 
   @override
   void initState() {
-    locationStore.addListener(() {
-      getCityFromLatLng(locationStore.value);
-    });
     super.initState();
+    locationStore.addListener(() {
+      locationAppBarStore.getCityFromLatLng(locationStore.value);
+    });
+    locationAppBarStore.getCityFromLatLng(locationStore.value);
   }
 
   @override
@@ -59,13 +58,18 @@ class _LocationAppBarState extends State<LocationAppBar> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Center(
-                  child: Text(
-                    city,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FWeight.bold,
-                      color: CColors.title,
-                    ),
+                  child: ValueListenableBuilder(
+                    valueListenable: locationAppBarStore,
+                    builder: (context, String state, child) {
+                      return Text(
+                        state,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FWeight.bold,
+                          color: CColors.title,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
@@ -92,18 +96,5 @@ class _LocationAppBarState extends State<LocationAppBar> {
       ),
       leading: null,
     );
-  }
-
-  Future<void> getCityFromLatLng(LatLng latLng) async {
-    final List<Placemark> placemarks = await placemarkFromCoordinates(
-      latLng.latitude,
-      latLng.longitude,
-    );
-
-    final location = placemarks.first;
-
-    setState(() {
-      city = "${location.subAdministrativeArea?.toUpperCase() ?? ""} - ${location.isoCountryCode}";
-    });
   }
 }
