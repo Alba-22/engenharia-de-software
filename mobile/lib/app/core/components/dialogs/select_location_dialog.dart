@@ -59,13 +59,13 @@ class SelectionLocationDialog extends StatelessWidget {
                 fontSize: 12,
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 18),
             CommonButton(
               width: double.infinity,
               text: "LOCALIZAÇÃO ATUAL",
               onTap: onTapCurrentLocation,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
