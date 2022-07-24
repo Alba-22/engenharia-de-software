@@ -8,6 +8,8 @@ import 'package:turistando/app/core/models/location_model.dart';
 import 'package:turistando/app/core/store/location_store.dart';
 import 'package:turistando/app/core/store/places_store.dart';
 
+import 'components/place_dialog.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -31,14 +33,19 @@ class _HomePageState extends State<HomePage> {
     });
     placesStore.observer(
       onState: (state) {
-        markers = state.map((e) {
+        markers = state.map((place) {
           return Marker(
-            point: LatLng(e.latitude, e.longitude),
+            point: LatLng(place.latitude, place.longitude),
             builder: (context) {
-              return const Icon(
-                Icons.location_pin,
-                color: Colors.red,
-                size: 20,
+              return InkWell(
+                onTap: () {
+                  placeDialog(context, place);
+                },
+                child: const Icon(
+                  Icons.location_pin,
+                  color: Colors.red,
+                  size: 40,
+                ),
               );
             },
           );
@@ -79,6 +86,7 @@ class _HomePageState extends State<HomePage> {
               MarkerClusterLayerOptions(
                 markers: markers,
                 builder: (context, markers) {
+                  // TODO: Fazer dar zoom quando clicar em um marker que é cluster
                   return const Icon(
                     Icons.location_pin,
                     color: Colors.red,

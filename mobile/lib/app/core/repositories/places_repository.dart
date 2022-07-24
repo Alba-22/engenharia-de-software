@@ -21,6 +21,8 @@ class PlacesRepositoryImpl implements PlacesRepository {
         state: "MG",
         latitude: -18.909334,
         longitude: -48.233782,
+        imageUrl: "https://www.uberlandia.mg.gov.br/wp-content/uploads/2019/09/sabia10.png",
+        rate: 9,
       ),
     ]);
   }

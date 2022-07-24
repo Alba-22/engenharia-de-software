@@ -9,6 +9,8 @@ class PlaceModel extends Equatable {
   final String state;
   final double latitude;
   final double longitude;
+  final String imageUrl;
+  final int rate;
 
   const PlaceModel({
     required this.id,
@@ -19,9 +21,23 @@ class PlaceModel extends Equatable {
     required this.state,
     required this.latitude,
     required this.longitude,
+    required this.imageUrl,
+    required this.rate,
   });
 
   @override
-  List<Object?> get props =>
-      [id, name, formattedAddress, district, city, state, latitude, longitude];
+  List<Object> get props {
+    return [
+      id,
+      name,
+      formattedAddress,
+      district,
+      city,
+      state,
+      latitude,
+      longitude,
+      imageUrl,
+      rate,
+    ];
+  }
 }
