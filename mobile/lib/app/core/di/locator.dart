@@ -1,6 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
-import 'package:turistando/app/core/components/appbar/location_appbar/location_appbar_store.dart';
 import 'package:turistando/app/core/repositories/places_repository.dart';
 import 'package:turistando/app/core/services/local_storage/local_storage_service.dart';
 import 'package:turistando/app/core/services/local_storage/secure_storage_service.dart';
@@ -41,7 +40,4 @@ void setupLocator() {
   // PLACES
   locator.registerFactory<PlacesRepository>(() => PlacesRepositoryImpl());
   locator.registerLazySingleton(() => PlacesStore(i.get(), i.get()));
-
-  // LOCATION APPBAR
-  locator.registerLazySingleton(() => LocationAppbarStore());
 }

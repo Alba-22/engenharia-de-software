@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:geocoding/geocoding.dart' hide Location;
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
+import 'package:turistando/app/core/models/location_model.dart';
 import 'package:turistando/app/core/services/local_storage/local_storage_service.dart';
 import 'package:turistando/app/core/utils/constants.dart';
 
-class LocationStore extends ValueNotifier<LatLng> {
+class LocationStore extends ValueNotifier<LocationModel> {
   final LocalStorageService _localStorage;
 
   LocationStore(this._localStorage) : super(initialLocation) {
@@ -12,18 +14,28 @@ class LocationStore extends ValueNotifier<LatLng> {
   }
 
   Future<void> _init() async {
-    final LatLng? latLng = await _recoverLocationFromStorage();
-    if (latLng == null) {
+    final LocationModel? lastLocation = await _recoverLocationFromStorage();
+    if (lastLocation == null) {
       getUserLocation();
     } else {
-      value = latLng;
+      setLocation(lastLocation);
     }
   }
 
-  void setLocation(LatLng newLocation) {
+  void setLocation(LocationModel newLocation) {
     value = newLocation;
     _writeLocationToStorage(newLocation);
     notifyListeners();
+  }
+
+  Future<void> setLocationFromLatLng(LatLng latLng) async {
+    final cityName = await _getCityFromLatLng(latLng.latitude, latLng.longitude);
+    final newLocation = LocationModel(
+      latitude: latLng.latitude,
+      longitude: latLng.longitude,
+      cityName: cityName ?? "",
+    );
+    setLocation(newLocation);
   }
 
   Future<void> getUserLocation() async {
@@ -51,29 +63,43 @@ class LocationStore extends ValueNotifier<LatLng> {
 
     locationData = await location.getLocation();
 
-    value = LatLng(
-      locationData.latitude ?? initialLocation.latitude,
-      locationData.longitude ?? initialLocation.longitude,
-    );
-    _writeLocationToStorage(value);
-    notifyListeners();
+    if (locationData.latitude != null && locationData.longitude != null) {
+      final cityName = await _getCityFromLatLng(locationData.latitude!, locationData.longitude!);
+      if (cityName != null) {
+        final newLocation = LocationModel(
+          latitude: locationData.latitude!,
+          longitude: locationData.longitude!,
+          cityName: cityName,
+        );
+        setLocation(newLocation);
+      }
+    }
   }
 
-  Future<void> _writeLocationToStorage(LatLng latLng) async {
-    await _localStorage.write(StorageKeys.lastLocationLatitude, latLng.latitude.toString());
-    await _localStorage.write(StorageKeys.lastLocationLongitude, latLng.longitude.toString());
+  Future<void> _writeLocationToStorage(LocationModel location) async {
+    await _localStorage.write(StorageKeys.lastLocation, location.toJson());
   }
 
-  Future<LatLng?> _recoverLocationFromStorage() async {
-    final latitudeStr = await _localStorage.read(StorageKeys.lastLocationLatitude);
-    final longitudeStr = await _localStorage.read(StorageKeys.lastLocationLongitude);
-    if (latitudeStr == null || longitudeStr == null) {
+  /// Try to get last location of a user from Local Storage.
+  ///
+  /// Returns null if the information is not on Local Storage.
+  /// This will happen mostly in first access to the app.
+  Future<LocationModel?> _recoverLocationFromStorage() async {
+    final lastLocation = await _localStorage.read(StorageKeys.lastLocation);
+    if (lastLocation == null) {
       return null;
     }
-    final latLng = LatLng(
-      double.parse(latitudeStr),
-      double.parse(longitudeStr),
+    return LocationModel.fromJson(lastLocation);
+  }
+
+  Future<String?> _getCityFromLatLng(double latitude, double longitude) async {
+    final List<Placemark> placemarks = await placemarkFromCoordinates(
+      latitude,
+      longitude,
     );
-    return latLng;
+
+    final location = placemarks.first;
+
+    return location.subAdministrativeArea?.toUpperCase();
   }
 }

@@ -6,6 +6,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:turistando/app/core/components/appbar/common_appbar.dart';
 import 'package:turistando/app/core/components/buttons/common_button.dart';
 import 'package:turistando/app/core/di/locator.dart';
+import 'package:turistando/app/core/models/location_model.dart';
 import 'package:turistando/app/core/store/location_store.dart';
 
 class PickOnMapPage extends StatefulWidget {
@@ -32,10 +33,10 @@ class _PickOnMapPageState extends State<PickOnMapPage> {
         children: [
           ValueListenableBuilder(
             valueListenable: locationStore,
-            builder: (context, LatLng location, child) {
+            builder: (context, LocationModel location, child) {
               return FlutterMap(
                 options: MapOptions(
-                  center: location,
+                  center: location.latLng,
                   zoom: 14,
                   allowPanning: false,
                   maxBounds: LatLngBounds(
@@ -99,7 +100,7 @@ class _PickOnMapPageState extends State<PickOnMapPage> {
                   if (selectedLocation == null) {
                     FToast.toast(context, msg: "Clique no mapa para escolher a localização");
                   } else {
-                    locationStore.setLocation(selectedLocation!);
+                    locationStore.setLocationFromLatLng(selectedLocation!);
                     Navigator.pop(context);
                   }
                 },

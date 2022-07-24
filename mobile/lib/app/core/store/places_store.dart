@@ -11,9 +11,9 @@ class PlacesStore extends StreamStore<String, List<PlaceModel>> {
 
   PlacesStore(this._repository, this._loggerService) : super([]);
 
-  Future<void> getAllPlacesByLatLng(double latitude, double longitude) async {
+  Future<void> getAllPlacesByCityName(String cityName) async {
     setLoading(true);
-    final result = await _repository.getPlaceByLatLng(latitude, longitude);
+    final result = await _repository.getPlacesByCityName(cityName);
     result.fold(
       (l) {
         _loggerService.recordError(l.message, StackTrace.current);

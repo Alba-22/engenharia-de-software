@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:turistando/app/core/models/location_model.dart';
 
 abstract class Assets {
   static const String icons = "assets/icons";
@@ -27,6 +27,11 @@ abstract class StorageKeys {
   static const String username = "username";
   static const String lastLocationLatitude = "last_location_latitude";
   static const String lastLocationLongitude = "last_location_longitude";
+  static const String lastLocation = "last_location";
 }
 
-final initialLocation = LatLng(-18.916626, -48.274283);
+const initialLocation = LocationModel(
+  latitude: -18.916626,
+  longitude: -48.274283,
+  cityName: "Uberlândia",
+);

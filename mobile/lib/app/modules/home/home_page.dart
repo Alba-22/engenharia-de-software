@@ -4,6 +4,7 @@ import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:turistando/app/core/components/appbar/location_appbar/location_appbar.dart';
 import 'package:turistando/app/core/di/locator.dart';
+import 'package:turistando/app/core/models/location_model.dart';
 import 'package:turistando/app/core/store/location_store.dart';
 import 'package:turistando/app/core/store/places_store.dart';
 
@@ -25,11 +26,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     locationStore.addListener(() {
-      placesStore.getAllPlacesByLatLng(
-        locationStore.value.latitude,
-        locationStore.value.longitude,
-      );
-      mapController.move(locationStore.value, 14);
+      placesStore.getAllPlacesByCityName(locationStore.value.cityName);
+      mapController.move(locationStore.value.latLng, 14);
     });
     placesStore.observer(
       onState: (state) {
@@ -56,10 +54,10 @@ class _HomePageState extends State<HomePage> {
       appBar: const LocationAppBar(),
       body: ValueListenableBuilder(
         valueListenable: locationStore,
-        builder: (context, LatLng location, child) {
+        builder: (context, LocationModel location, child) {
           return FlutterMap(
             options: MapOptions(
-              center: location,
+              center: location.latLng,
               zoom: 14,
               allowPanning: false,
               maxBounds: LatLngBounds(

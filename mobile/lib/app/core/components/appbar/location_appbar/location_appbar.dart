@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:turistando/app/core/components/appbar/location_appbar/location_appbar_store.dart';
 import 'package:turistando/app/core/components/dialogs/select_location_dialog.dart';
 import 'package:turistando/app/core/di/locator.dart';
+import 'package:turistando/app/core/models/location_model.dart';
 import 'package:turistando/app/core/store/location_store.dart';
 import 'package:turistando/app/core/utils/constants.dart';
 import 'package:turistando/app/core/utils/custom_colors.dart';
@@ -20,16 +20,6 @@ class LocationAppBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _LocationAppBarState extends State<LocationAppBar> {
   final locationStore = locator.get<LocationStore>();
-  final locationAppBarStore = locator.get<LocationAppbarStore>();
-
-  @override
-  void initState() {
-    super.initState();
-    locationStore.addListener(() {
-      locationAppBarStore.getCityFromLatLng(locationStore.value);
-    });
-    locationAppBarStore.getCityFromLatLng(locationStore.value);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +49,10 @@ class _LocationAppBarState extends State<LocationAppBar> {
                 ),
                 child: Center(
                   child: ValueListenableBuilder(
-                    valueListenable: locationAppBarStore,
-                    builder: (context, String state, child) {
+                    valueListenable: locationStore,
+                    builder: (context, LocationModel state, child) {
                       return Text(
-                        state,
+                        state.cityName,
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FWeight.bold,

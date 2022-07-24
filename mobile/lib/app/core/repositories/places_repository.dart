@@ -3,16 +3,12 @@ import 'package:turistando/app/core/errors/failure.dart';
 import 'package:turistando/app/core/models/place_model.dart';
 
 abstract class PlacesRepository {
-  Future<Either<ServerFailure, List<PlaceModel>>> getPlaceByLatLng(
-      double latitude, double longitude);
+  Future<Either<ServerFailure, List<PlaceModel>>> getPlacesByCityName(String cityName);
 }
 
 class PlacesRepositoryImpl implements PlacesRepository {
   @override
-  Future<Either<ServerFailure, List<PlaceModel>>> getPlaceByLatLng(
-    double latitude,
-    double longitude,
-  ) async {
+  Future<Either<ServerFailure, List<PlaceModel>>> getPlacesByCityName(String cityName) async {
     await Future.delayed(const Duration(seconds: 1));
 
     return const Right([
