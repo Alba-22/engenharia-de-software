@@ -9,6 +9,8 @@ import 'package:turistando/app/core/models/place_model.dart';
 import 'package:turistando/app/core/utils/constants.dart';
 import 'package:turistando/app/core/utils/custom_colors.dart';
 
+import 'components/review_dialog.dart';
+
 class PlaceDetailsPage extends StatefulWidget {
   final PlaceModel place;
 
@@ -114,7 +116,9 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
                             ],
                           ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              showReviewDialog(context, widget.place);
+                            },
                             child: const Text(
                               "AVALIAR",
                               style: TextStyle(
