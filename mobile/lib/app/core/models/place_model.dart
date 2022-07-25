@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 
 class PlaceModel extends Equatable {
@@ -9,7 +10,8 @@ class PlaceModel extends Equatable {
   final String state;
   final double latitude;
   final double longitude;
-  final String imageUrl;
+  final String description;
+  final List<String> images;
   final int rate;
 
   const PlaceModel({
@@ -21,7 +23,8 @@ class PlaceModel extends Equatable {
     required this.state,
     required this.latitude,
     required this.longitude,
-    required this.imageUrl,
+    required this.description,
+    required this.images,
     required this.rate,
   });
 
@@ -36,8 +39,12 @@ class PlaceModel extends Equatable {
       state,
       latitude,
       longitude,
-      imageUrl,
+      description,
+      images,
       rate,
     ];
   }
+
+  @override
+  bool get stringify => true;
 }
