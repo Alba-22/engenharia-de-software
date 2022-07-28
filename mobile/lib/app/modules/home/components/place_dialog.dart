@@ -23,7 +23,7 @@ void placeDialog(BuildContext context, PlaceModel place) {
           },
           child: Container(
             height: 140,
-            width: MediaQuery.of(context).size.width * 0.9,
+            width: MediaQuery.of(context).size.width < 500 ? MediaQuery.of(context).size.width * 0.9 : 500,
             decoration: BoxDecoration(
               color: CColors.white,
               borderRadius: BorderRadius.circular(8),

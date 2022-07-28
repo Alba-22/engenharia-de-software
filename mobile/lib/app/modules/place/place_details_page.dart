@@ -34,15 +34,19 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
           child: Column(
             children: [
               SizedBox(
-                height: 250,
+                height: MediaQuery.of(context).size.height * 0.4,
                 child: Stack(
                   children: [
                     CarouselSlider(
                       items: widget.place.images.map((e) {
-                        return Image.network(e);
+                        return Image.network(
+                          e,
+                          width: double.infinity,
+                          fit: BoxFit.fitWidth,
+                        );
                       }).toList(),
                       options: CarouselOptions(
-                        height: 250,
+                        height: MediaQuery.of(context).size.height * 0.4,
                         autoPlay: widget.place.images.length > 1 ? true : false,
                         enableInfiniteScroll: true,
                         viewportFraction: 1,
@@ -50,8 +54,7 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
                     ),
                     Positioned(
                       left: MediaQuery.of(context).size.width * 0.05,
-                      top: MediaQuery.of(context).padding.top +
-                          MediaQuery.of(context).size.width * 0.05,
+                      top: MediaQuery.of(context).padding.top + MediaQuery.of(context).size.width * 0.05,
                       child: InkWell(
                         onTap: () => context.pop(),
                         child: const Icon(
