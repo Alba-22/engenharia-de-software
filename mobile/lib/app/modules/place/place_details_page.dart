@@ -4,10 +4,12 @@ import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:go_router/go_router.dart';
 import 'package:turistando/app/core/components/buttons/common_button.dart';
 import 'package:turistando/app/core/components/buttons/favorite_button.dart';
+import 'package:turistando/app/core/di/locator.dart';
 
 import 'package:turistando/app/core/models/place_model.dart';
 import 'package:turistando/app/core/utils/constants.dart';
 import 'package:turistando/app/core/utils/custom_colors.dart';
+import 'package:turistando/app/modules/place/favorite_place_store.dart';
 
 import 'components/review_dialog.dart';
 
@@ -24,6 +26,20 @@ class PlaceDetailsPage extends StatefulWidget {
 }
 
 class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
+  final favoriteStore = locator.get<FavoritePlaceStore>();
+
+  bool isFavorited = false;
+
+  @override
+  void initState() {
+    super.initState();
+    favoriteStore.getIfPlaceIsFavorited(widget.place).then((value) {
+      setState(() {
+        isFavorited = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -157,8 +173,17 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
                       Row(
                         children: [
                           FavoriteButton(
-                            isFavorited: false,
-                            onTap: () {},
+                            isFavorited: isFavorited,
+                            onTap: () {
+                              setState(() {
+                                isFavorited = !isFavorited;
+                              });
+                              if (isFavorited) {
+                                favoriteStore.savePlaceToFavorites(widget.place);
+                              } else {
+                                favoriteStore.removePlaceFromFavorites(widget.place);
+                              }
+                            },
                           ),
                           const SizedBox(width: 16),
                           Expanded(

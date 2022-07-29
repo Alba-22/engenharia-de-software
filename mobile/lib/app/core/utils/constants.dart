@@ -28,6 +28,7 @@ abstract class StorageKeys {
   static const String lastLocationLatitude = "last_location_latitude";
   static const String lastLocationLongitude = "last_location_longitude";
   static const String lastLocation = "last_location";
+  static const String favoritePlaces = "favorite_places";
 }
 
 const initialLocation = LocationModel(

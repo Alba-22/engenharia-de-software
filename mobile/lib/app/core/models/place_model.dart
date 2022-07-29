@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 class PlaceModel extends Equatable {
@@ -47,4 +49,40 @@ class PlaceModel extends Equatable {
 
   @override
   bool get stringify => true;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'formatted_address': formattedAddress,
+      'district': district,
+      'city': city,
+      'state': state,
+      'latitude': latitude,
+      'longitude': longitude,
+      'images': images,
+      'description': description,
+      'rate': rate,
+    };
+  }
+
+  factory PlaceModel.fromMap(Map<String, dynamic> map) {
+    return PlaceModel(
+      id: map['id'] as String,
+      name: map['name'] as String,
+      formattedAddress: map['formatted_address'] as String,
+      district: map['district'] as String,
+      city: map['city'] as String,
+      state: map['state'] as String,
+      latitude: map['latitude'] as double,
+      longitude: map['longitude'] as double,
+      description: map['description'] as String,
+      images: List.from((map['images'])),
+      rate: map['rate'] as int,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory PlaceModel.fromJson(String source) => PlaceModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
