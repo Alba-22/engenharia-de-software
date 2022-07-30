@@ -9,6 +9,7 @@ import 'package:turistando/app/core/store/location_store.dart';
 import 'package:turistando/app/core/store/places_store.dart';
 import 'package:turistando/app/modules/login/login_store.dart';
 import 'package:turistando/app/modules/login/repositories/login_repository.dart';
+import 'package:turistando/app/modules/place/add_place_to_tour_store.dart';
 import 'package:turistando/app/modules/place/favorite_place_store.dart';
 import 'package:turistando/app/modules/register/register_store.dart';
 import 'package:turistando/app/modules/register/repositories/register_repository.dart';
@@ -44,4 +45,7 @@ void setupLocator() {
 
   // FAVORITES
   locator.registerLazySingleton(() => FavoritePlaceStore(i.get()));
+
+  // TOUR
+  locator.registerLazySingleton(() => AddPlaceToTourStore(i.get(), i.get()));
 }

@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:ftoast/ftoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:turistando/app/core/components/buttons/common_button.dart';
 import 'package:turistando/app/core/components/buttons/favorite_button.dart';
@@ -9,6 +10,7 @@ import 'package:turistando/app/core/di/locator.dart';
 import 'package:turistando/app/core/models/place_model.dart';
 import 'package:turistando/app/core/utils/constants.dart';
 import 'package:turistando/app/core/utils/custom_colors.dart';
+import 'package:turistando/app/modules/place/add_place_to_tour_store.dart';
 import 'package:turistando/app/modules/place/favorite_place_store.dart';
 
 import 'components/review_dialog.dart';
@@ -27,6 +29,7 @@ class PlaceDetailsPage extends StatefulWidget {
 
 class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
   final favoriteStore = locator.get<FavoritePlaceStore>();
+  final addPlaceToTourStore = locator.get<AddPlaceToTourStore>();
 
   bool isFavorited = false;
 
@@ -37,6 +40,18 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
       setState(() {
         isFavorited = value;
       });
+    });
+    addPlaceToTourStore.addListener(() {
+      if (addPlaceToTourStore.value is AddPlaceToTourSuccessState) {
+        FToast.toast(
+          context,
+          msg: "Local adicionado na lista de tours",
+          color: const Color(0xFF4BB543),
+          corner: 0,
+        );
+      } else if (addPlaceToTourStore.value is AddPlaceToTourErrorState) {
+        FToast.toast(context, msg: (addPlaceToTourStore.value as AddPlaceToTourErrorState).message);
+      }
     });
   }
 
@@ -187,10 +202,17 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
                           ),
                           const SizedBox(width: 16),
                           Expanded(
-                            child: CommonButton(
-                              text: "ADICIONAR AO TOUR",
-                              onTap: () {},
-                            ),
+                            child: ValueListenableBuilder(
+                                valueListenable: addPlaceToTourStore,
+                                builder: (context, AddPlaceToTourState state, child) {
+                                  return CommonButton(
+                                    text: "ADICIONAR AO TOUR",
+                                    isLoading: state is AddPlaceToTourLoadingState,
+                                    onTap: () {
+                                      addPlaceToTourStore.addToTour(widget.place);
+                                    },
+                                  );
+                                }),
                           ),
                         ],
                       ),
@@ -204,5 +226,11 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    addPlaceToTourStore.dispose();
+    super.dispose();
   }
 }
