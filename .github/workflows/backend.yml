@@ -1,4 +1,4 @@
-name: Test and Deploy Backend
+name: Deploy Backend
 
 on:
   push:
@@ -6,27 +6,29 @@ on:
       - backend
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-      - name: Install dependencies
-        run: |
-          cd api
-          python -m pip install --upgrade pip
-          pip install poetry
-          poetry install
-      - name: Lint with pylint
-        run: |
-          pylint --errors-only $(find app/ tests/ -type f -name '*.py')
-        continue-on-error: true
-      - name: Test with pytest
-        run: |
-          pytest tests
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: '3.10'
+  #     - name: Install dependencies
+  #       run: |
+  #         cd api
+  #         python -m pip install --upgrade pip
+  #         pip install poetry
+  #         poetry install
+  #     - name: Lint with pylint
+  #       run: |
+  #         cd api
+  #         pylint --errors-only $(find app/ tests/ -type f -name '*.py')
+  #       continue-on-error: true
+  #     - name: Test with pytest
+  #       run: |
+  #         cd api
+  #         pytest tests
   build:
     runs-on: ubuntu-latest
     steps:
