@@ -2,8 +2,10 @@ from uuid import UUID
 
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
+from sqlalchemy.orm import relationship
 
 from .base import Base
+from .picture import Picture
 
 
 class User(Base):
@@ -17,4 +19,6 @@ class User(Base):
     phone: str = sa.Column(sa.String(255))
     password: str = sa.Column(sa.String(255), nullable=False)
 
-    # picture_id: UUID = sa.Column(sa.ForeignKey("picture.id", ondelete="SET NULL"))
+    picture_id: UUID = sa.Column(sa.ForeignKey("picture.id", ondelete="SET NULL"))
+
+    profile_picture: Picture = relationship("Picture", back_populates="user")

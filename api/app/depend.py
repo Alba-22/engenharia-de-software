@@ -1,4 +1,5 @@
 from functools import lru_cache
+from typing import Generator
 
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
@@ -21,7 +22,7 @@ def settings() -> Settings:
         raise RuntimeError(msg) from ve
 
 
-def db() -> Session:
+def db() -> Generator[Session, None, None]:
     """Retorna uma instância de `Session`."""
 
     db: Session = sessionmaker()

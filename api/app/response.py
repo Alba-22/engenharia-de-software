@@ -24,6 +24,30 @@ class ResponseException(Exception):
 
         return cls(400, error_code, message)
 
+    @classmethod
+    def not_found(
+        cls: "ResponseException", error_code: int, message: str
+    ) -> "ResponseException":
+        """Retorna uma instância de `ResponseException` com `status code` 404."""
+
+        return cls(404, error_code, message)
+
+    @classmethod
+    def unauthorized(
+        cls: "ResponseException", error_code: int, message: str
+    ) -> "ResponseException":
+        """Retorna uma instância de `ResponseException` com `status code` 401."""
+
+        return cls(401, error_code, message)
+
+    @classmethod
+    def forbidden(
+        cls: "ResponseException", error_code: int, message: str
+    ) -> "ResponseException":
+        """Retorna uma instância de `ResponseException` com `status code` 403."""
+
+        return cls(403, error_code, message)
+
 
 def response_exception_handler(_req: Request, exc: ResponseException):
     """Torna um objeto de ResponseException em uma resposta JSON."""
