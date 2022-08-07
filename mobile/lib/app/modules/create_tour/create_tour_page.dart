@@ -8,8 +8,9 @@ import 'package:turistando/app/core/di/locator.dart';
 import 'package:turistando/app/core/utils/constants.dart';
 import 'package:turistando/app/core/utils/custom_colors.dart';
 
-import 'delete_place_from_current_tour_store.dart';
-import 'get_places_in_current_tour_store.dart';
+import 'stores/create_tour_store.dart';
+import 'stores/delete_place_from_current_tour_store.dart';
+import 'stores/get_places_in_current_tour_store.dart';
 
 class CreateTourPage extends StatefulWidget {
   const CreateTourPage({Key? key}) : super(key: key);
@@ -21,6 +22,9 @@ class CreateTourPage extends StatefulWidget {
 class _CreateTourPageState extends State<CreateTourPage> {
   final getStore = locator.get<GetPlacesInCurrentTourStore>();
   final deleteStore = locator.get<DeletePlaceFromCurrentTourStore>();
+  final createStore = locator.get<CreateTourStore>();
+
+  final formKey = GlobalKey<FormState>();
 
   final tourNameController = TextEditingController();
 
@@ -38,6 +42,16 @@ class _CreateTourPageState extends State<CreateTourPage> {
         );
       }
     });
+    createStore.addListener(() {
+      if (createStore.value is CreateTourSuccessState) {
+        FToast.toast(
+          context,
+          color: CColors.green,
+          msg: "Tour criado com sucesso!",
+        );
+        Navigator.pop(context);
+      }
+    });
   }
 
   @override
@@ -50,81 +64,113 @@ class _CreateTourPageState extends State<CreateTourPage> {
         margin: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * 0.05,
         ),
-        child: Column(
-          children: [
-            const SizedBox(height: 24),
-            const Text(
-              "NOME DO TOUR",
-              style: TextStyle(
-                color: CColors.title,
-                fontWeight: FWeight.bold,
-                fontSize: 18,
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              const SizedBox(height: 24),
+              const Text(
+                "NOME DO TOUR",
+                style: TextStyle(
+                  color: CColors.title,
+                  fontWeight: FWeight.bold,
+                  fontSize: 18,
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            CommonField(
-              controller: tourNameController,
-            ),
-            const SizedBox(height: 24),
-            const Text(
-              "LOCAIS ADICIONADOS",
-              style: TextStyle(
-                color: CColors.title,
-                fontWeight: FWeight.bold,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: ValueListenableBuilder(
-                valueListenable: getStore,
-                builder: (context, GetPlacesInCurrentTourState getState, child) {
-                  if (getState is GetPlacesInCurrentTourLoadingState) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (getState is GetPlacesInCurrentTourEmptyState) {
-                    return const Center(child: Text("Não há nenhum local na lista ainda"));
-                  } else if (getState is GetPlacesInCurrentTourSuccessState) {
-                    return ValueListenableBuilder(
-                      valueListenable: deleteStore,
-                      builder: (context, DeletePlaceFromCurrentTourState deleteState, child) {
-                        if (deleteState is DeletePlaceFromCurrentTourLoadingState) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        return ListView.separated(
-                          itemCount: getState.places.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final place = getState.places[index];
-
-                            return TourCard(
-                              place: place,
-                              onDelete: () {
-                                deleteStore.deletePlaceFromCurrentTour(place);
-                              },
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return const SizedBox(height: 8);
-                          },
-                        );
-                      },
-                    );
+              const SizedBox(height: 16),
+              CommonField(
+                controller: tourNameController,
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "O nome do tour é obrigatório!";
                   }
-                  final value = getState as GetPlacesInCurrentTourErrorState;
 
-                  return Center(child: Text(value.message));
+                  return null;
                 },
               ),
-            ),
-            const SizedBox(height: 16),
-            CommonButton(
-              text: "CRIAR TOUR",
-              width: double.infinity,
-              onTap: () {},
-            ),
-            const SizedBox(height: 24),
-          ],
+              const SizedBox(height: 24),
+              const Text(
+                "LOCAIS ADICIONADOS",
+                style: TextStyle(
+                  color: CColors.title,
+                  fontWeight: FWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Expanded(
+                child: ValueListenableBuilder(
+                  valueListenable: getStore,
+                  builder: (context, GetPlacesInCurrentTourState getState, child) {
+                    if (getState is GetPlacesInCurrentTourLoadingState) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (getState is GetPlacesInCurrentTourEmptyState) {
+                      return const Center(child: Text("Não há nenhum local na lista ainda"));
+                    } else if (getState is GetPlacesInCurrentTourSuccessState) {
+                      return ValueListenableBuilder(
+                        valueListenable: deleteStore,
+                        builder: (context, DeletePlaceFromCurrentTourState deleteState, child) {
+                          if (deleteState is DeletePlaceFromCurrentTourLoadingState) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          return ListView.separated(
+                            itemCount: getState.places.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final place = getState.places[index];
+
+                              return TourCard(
+                                place: place,
+                                onDelete: () {
+                                  deleteStore.deletePlaceFromCurrentTour(place);
+                                },
+                              );
+                            },
+                            separatorBuilder: (BuildContext context, int index) {
+                              return const SizedBox(height: 8);
+                            },
+                          );
+                        },
+                      );
+                    }
+                    final value = getState as GetPlacesInCurrentTourErrorState;
+
+                    return Center(child: Text(value.message));
+                  },
+                ),
+              ),
+              const SizedBox(height: 16),
+              ValueListenableBuilder(
+                valueListenable: createStore,
+                builder: (context, CreateTourState createState, child) {
+                  return ValueListenableBuilder(
+                    valueListenable: getStore,
+                    builder: (context, GetPlacesInCurrentTourState getState, child) {
+                      return CommonButton(
+                        text: "CRIAR TOUR",
+                        width: double.infinity,
+                        isLoading: createState is CreateTourLoadingState,
+                        onTap: () {
+                          // ! ISSO AQUI TÁ HORRÍVEL
+                          if (getState is GetPlacesInCurrentTourEmptyState) {
+                            FToast.toast(
+                              context,
+                              msg: "Adicione um local para poder criar um tour!",
+                            );
+                          } else if ((formKey.currentState?.validate() ?? false) &&
+                              getState is GetPlacesInCurrentTourSuccessState) {
+                            createStore.createTour(tourNameController.text.trim(), getState.places);
+                          }
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
+              const SizedBox(height: 24),
+            ],
+          ),
         ),
       ),
     );

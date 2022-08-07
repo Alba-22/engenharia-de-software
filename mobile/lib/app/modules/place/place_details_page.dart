@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:ftoast/ftoast.dart';
 import 'package:go_router/go_router.dart';
+
 import 'package:turistando/app/core/components/buttons/common_button.dart';
 import 'package:turistando/app/core/components/buttons/favorite_button.dart';
 import 'package:turistando/app/core/di/locator.dart';
-
 import 'package:turistando/app/core/models/place_model.dart';
 import 'package:turistando/app/core/utils/constants.dart';
 import 'package:turistando/app/core/utils/custom_colors.dart';
-import 'package:turistando/app/modules/place/add_place_to_tour_store.dart';
-import 'package:turistando/app/modules/place/favorite_place_store.dart';
 
+import 'add_place_to_tour_store.dart';
 import 'components/review_dialog.dart';
+import 'favorite_place_store.dart';
 
 class PlaceDetailsPage extends StatefulWidget {
   final PlaceModel place;
@@ -46,7 +46,7 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
         FToast.toast(
           context,
           msg: "Local adicionado na lista de tours",
-          color: const Color(0xFF4BB543),
+          color: CColors.green,
           corner: 0,
         );
       } else if (addPlaceToTourStore.value is AddPlaceToTourErrorState) {

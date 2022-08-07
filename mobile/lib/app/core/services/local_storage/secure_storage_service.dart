@@ -13,7 +13,7 @@ class SecureStorage implements LocalStorageService {
   Future<String?> read(String key) => _secureStorage.read(key: key);
 
   @override
-  Future<void> write(String key, String value) => _secureStorage.write(key: key, value: value);
+  Future<void> write(String key, String? value) => _secureStorage.write(key: key, value: value);
 
   @override
   Future<void> clear() => _secureStorage.deleteAll();

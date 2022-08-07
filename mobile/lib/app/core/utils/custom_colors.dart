@@ -7,6 +7,7 @@ abstract class CColors {
   static const Color fakeWhite = Color(0xFFF0F9FC);
   static const Color gray = Color(0xFF585858);
   static const Color red = Color(0xFFFF4343);
+  static const Color green = Color(0xFF4BB543);
 
   static MaterialColor primarySwatch = _getMaterialColor(primary);
 
