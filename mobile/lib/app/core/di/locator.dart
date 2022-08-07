@@ -7,6 +7,8 @@ import 'package:turistando/app/core/services/logger/custom_logger.dart';
 import 'package:turistando/app/core/services/logger/logger_service.dart';
 import 'package:turistando/app/core/store/location_store.dart';
 import 'package:turistando/app/core/store/places_store.dart';
+import 'package:turistando/app/modules/create_tour/delete_place_from_current_tour_store.dart';
+import 'package:turistando/app/modules/create_tour/get_places_in_current_tour_store.dart';
 import 'package:turistando/app/modules/login/login_store.dart';
 import 'package:turistando/app/modules/login/repositories/login_repository.dart';
 import 'package:turistando/app/modules/place/add_place_to_tour_store.dart';
@@ -48,4 +50,6 @@ void setupLocator() {
 
   // TOUR
   locator.registerLazySingleton(() => AddPlaceToTourStore(i.get(), i.get()));
+  locator.registerLazySingleton(() => GetPlacesInCurrentTourStore(i.get(), i.get()));
+  locator.registerLazySingleton(() => DeletePlaceFromCurrentTourStore(i.get(), i.get()));
 }

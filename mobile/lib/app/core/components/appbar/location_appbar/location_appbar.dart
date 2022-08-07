@@ -67,7 +67,9 @@ class _LocationAppBarState extends State<LocationAppBar> {
           ),
           const SizedBox(width: 8),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              context.push("/create-tour");
+            },
             child: Container(
               width: 40,
               height: 40,

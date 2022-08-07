@@ -85,7 +85,8 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
                     ),
                     Positioned(
                       left: MediaQuery.of(context).size.width * 0.05,
-                      top: MediaQuery.of(context).padding.top + MediaQuery.of(context).size.width * 0.05,
+                      top: MediaQuery.of(context).padding.top +
+                          MediaQuery.of(context).size.width * 0.05,
                       child: InkWell(
                         onTap: () => context.pop(),
                         child: const Icon(
@@ -226,11 +227,5 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    addPlaceToTourStore.dispose();
-    super.dispose();
   }
 }
