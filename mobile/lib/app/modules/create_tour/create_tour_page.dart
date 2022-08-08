@@ -3,7 +3,7 @@ import 'package:ftoast/ftoast.dart';
 import 'package:turistando/app/core/components/appbar/common_appbar.dart';
 import 'package:turistando/app/core/components/buttons/common_button.dart';
 import 'package:turistando/app/core/components/fields/common_field.dart';
-import 'package:turistando/app/core/components/layout/tour_card.dart';
+import 'package:turistando/app/core/components/layout/place_card.dart';
 import 'package:turistando/app/core/di/locator.dart';
 import 'package:turistando/app/core/utils/constants.dart';
 import 'package:turistando/app/core/utils/custom_colors.dart';
@@ -120,7 +120,7 @@ class _CreateTourPageState extends State<CreateTourPage> {
                             itemBuilder: (BuildContext context, int index) {
                               final place = getState.places[index];
 
-                              return TourCard(
+                              return PlaceCard(
                                 place: place,
                                 onDelete: () {
                                   deleteStore.deletePlaceFromCurrentTour(place);

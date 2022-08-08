@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
-import 'package:turistando/app/core/models/tour_model.dart';
+import 'package:turistando/app/core/models/place_model.dart';
 import 'package:turistando/app/core/utils/constants.dart';
 import 'package:turistando/app/core/utils/custom_colors.dart';
 
-class TourCard extends StatelessWidget {
-  final TourModel tour;
+class PlaceCard extends StatelessWidget {
+  final PlaceModel place;
   final VoidCallback? onTap;
   final VoidCallback? onDelete;
 
-  const TourCard({
+  const PlaceCard({
     Key? key,
-    required this.tour,
+    required this.place,
     this.onTap,
     this.onDelete,
   }) : super(key: key);
@@ -38,7 +38,7 @@ class TourCard extends StatelessWidget {
                     bottomLeft: Radius.circular(8),
                   ),
                   child: Image.network(
-                    tour.highlightImage,
+                    place.images.first,
                     height: MediaQuery.of(context).size.height * 0.15,
                     width: constraints.maxWidth * 0.4,
                     fit: BoxFit.cover,
@@ -51,7 +51,7 @@ class TourCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          tour.title,
+                          place.name,
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FWeight.semiBold,
@@ -59,7 +59,7 @@ class TourCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          tour.description,
+                          place.description,
                           maxLines: 4,
                           textAlign: TextAlign.justify,
                           style: const TextStyle(
@@ -76,7 +76,7 @@ class TourCard extends StatelessWidget {
                               size: 16,
                             ),
                             Text(
-                              tour.location,
+                              place.city,
                               style: const TextStyle(
                                 fontSize: 10,
                                 color: CColors.gray,
@@ -88,7 +88,7 @@ class TourCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             RatingStars(
-                              value: tour.rate / 2,
+                              value: place.rate / 2,
                               starCount: 5,
                               starColor: CColors.primary,
                               starOffColor: CColors.primary.withOpacity(0.25),

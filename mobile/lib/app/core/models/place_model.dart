@@ -84,5 +84,6 @@ class PlaceModel extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory PlaceModel.fromJson(String source) => PlaceModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PlaceModel.fromJson(String source) =>
+      PlaceModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

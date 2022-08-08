@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:turistando/app/core/utils/constants.dart';
 import 'package:turistando/app/core/utils/custom_colors.dart';
 import 'package:turistando/app/modules/home/home_page.dart';
+import 'package:turistando/app/modules/list/list_page.dart';
 
 class EntryPage extends StatefulWidget {
   const EntryPage({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _EntryPageState extends State<EntryPage> {
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         children: [
-          Container(color: Colors.red),
+          const ListPage(),
           const HomePage(),
           Container(color: Colors.green),
         ],

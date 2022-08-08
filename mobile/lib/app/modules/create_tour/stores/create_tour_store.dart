@@ -20,20 +20,18 @@ class CreateTourStore extends ValueNotifier<CreateTourState> {
 
   Future<void> createTour(String name, List<PlaceModel> places) async {
     value = CreateTourLoadingState();
-    try {
-      final payload = CreateTourPayloadModel(tourName: name, places: places);
-      final result = await _repository.createTour(payload);
-      return result.fold(
-        (l) => value = CreateTourErrorState("Ocorreu um erro ao criar o tour!"),
-        (r) async {
-          await _localStorage.write(StorageKeys.tourBeingCreated, null);
-          value = CreateTourSuccessState();
-        },
-      );
-    } catch (exception, stackTrace) {
-      value = CreateTourErrorState("Ocorreu um erro ao criar o tour!");
-      _logger.recordError(exception, stackTrace);
-    }
+    final payload = CreateTourPayloadModel(tourName: name, places: places);
+    final result = await _repository.createTour(payload);
+    result.fold(
+      (l) {
+        _logger.recordError(l, StackTrace.current);
+        value = CreateTourErrorState("Ocorreu um erro ao criar o tour!");
+      },
+      (r) async {
+        await _localStorage.write(StorageKeys.tourBeingCreated, null);
+        value = CreateTourSuccessState();
+      },
+    );
   }
 }
 

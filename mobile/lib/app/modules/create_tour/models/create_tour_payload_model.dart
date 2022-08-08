@@ -1,14 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
+import 'package:equatable/equatable.dart';
 
 import 'package:turistando/app/core/models/place_model.dart';
 
-class CreateTourPayloadModel {
+class CreateTourPayloadModel extends Equatable {
   final String tourName;
   final List<PlaceModel> places;
 
-  CreateTourPayloadModel({
+  const CreateTourPayloadModel({
     required this.tourName,
     required this.places,
   });
@@ -33,15 +34,5 @@ class CreateTourPayloadModel {
   String toJson() => json.encode(toMap());
 
   @override
-  String toString() => 'CreateTourPayloadModel(tourName: $tourName, places: $places)';
-
-  @override
-  bool operator ==(covariant CreateTourPayloadModel other) {
-    if (identical(this, other)) return true;
-
-    return other.tourName == tourName && listEquals(other.places, places);
-  }
-
-  @override
-  int get hashCode => tourName.hashCode ^ places.hashCode;
+  List<Object> get props => [tourName, places];
 }
