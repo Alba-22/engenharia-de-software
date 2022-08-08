@@ -24,6 +24,8 @@ import 'package:turistando/app/modules/place/favorite_place_store.dart';
 import 'package:turistando/app/modules/register/register_store.dart';
 import 'package:turistando/app/modules/register/repositories/register_repository.dart';
 import 'package:turistando/app/modules/splash/splash_store.dart';
+import 'package:turistando/app/modules/tour/repositories/tour_repository.dart';
+import 'package:turistando/app/modules/tour/store/get_tour_details_store.dart';
 
 final locator = GetIt.instance;
 
@@ -63,6 +65,8 @@ void setupLocator() {
   locator.registerLazySingleton(() => DeletePlaceFromCurrentTourStore(i.get(), i.get()));
   locator.registerFactory<CreateTourRepository>(() => CreateTourRepositoryImpl(i.get()));
   locator.registerLazySingleton(() => CreateTourStore(i.get(), i.get(), i.get()));
+  locator.registerLazySingleton(() => GetTourDetailsStore(i.get(), i.get()));
+  locator.registerLazySingleton<TourRepository>(() => TourRepositoryImpl(i.get()));
 
   // LIST
   locator.registerFactory<ListRepository>(() => ListRepositoryImpl(i.get()));

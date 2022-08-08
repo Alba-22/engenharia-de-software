@@ -6,6 +6,7 @@ import 'package:turistando/app/modules/login/login_page.dart';
 import 'package:turistando/app/modules/place/place_details_page.dart';
 import 'package:turistando/app/modules/register/register_page.dart';
 import 'package:turistando/app/modules/splash/splash_page.dart';
+import 'package:turistando/app/modules/tour/tour_details_page.dart';
 import 'package:turistando/app/pages/pick_on_map/pick_on_map_page.dart';
 
 final router = GoRouter(
@@ -37,6 +38,10 @@ final router = GoRouter(
     GoRoute(
       path: "/create-tour",
       builder: (context, state) => const CreateTourPage(),
+    ),
+    GoRoute(
+      path: "/tour-details",
+      builder: (context, state) => TourDetailsPage(tourId: state.extra as int),
     ),
   ],
 );

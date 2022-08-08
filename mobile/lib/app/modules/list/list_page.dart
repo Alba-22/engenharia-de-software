@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:turistando/app/core/components/appbar/location_appbar/location_appbar.dart';
 import 'package:turistando/app/core/components/layout/tour_card.dart';
 import 'package:turistando/app/core/di/locator.dart';
@@ -67,7 +68,12 @@ class _ListPageState extends State<ListPage> {
                         ),
                       TourCard(
                         tour: tour,
-                        onTap: () {},
+                        onTap: () {
+                          context.push(
+                            "/tour-details",
+                            extra: tour.id,
+                          );
+                        },
                       ),
                     ],
                   );
