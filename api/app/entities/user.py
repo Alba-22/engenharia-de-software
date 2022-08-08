@@ -5,7 +5,9 @@ from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import relationship
 
 from .base import Base
+from .location import LocationReview
 from .picture import Picture
+from .tour import Tour, TourReview
 
 
 class User(Base):
@@ -22,3 +24,19 @@ class User(Base):
     picture_id: UUID = sa.Column(sa.ForeignKey("picture.id", ondelete="SET NULL"))
 
     profile_picture: Picture = relationship("Picture", back_populates="user")
+
+    location_reviews: list[LocationReview] = relationship(
+        "LocationReview",
+        back_populates="user",
+        cascade="all, delete",
+    )
+    tour_reviews: list[TourReview] = relationship(
+        "TourReview",
+        back_populates="user",
+        cascade="all, delete",
+    )
+    tours: list[Tour] = relationship(
+        "Tour",
+        back_populates="user",
+        cascade="all, delete",
+    )

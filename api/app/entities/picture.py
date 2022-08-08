@@ -6,6 +6,7 @@ from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import relationship
 
 from .base import Base
+from .location import Location, location_picture_table
 
 if TYPE_CHECKING:
     from .user import User
@@ -21,4 +22,7 @@ class Picture(Base):
 
     user: Optional["User"] = relationship(
         "User", back_populates="profile_picture", uselist=False
+    )
+    locations: list[Location] = relationship(
+        "Location", secondary=location_picture_table, back_populates="picturess"
     )
