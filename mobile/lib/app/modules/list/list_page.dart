@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:turistando/app/core/components/appbar/location_appbar/location_appbar.dart';
 import 'package:turistando/app/core/components/layout/tour_card.dart';
 import 'package:turistando/app/core/di/locator.dart';
+import 'package:turistando/app/core/store/location_store.dart';
 import 'package:turistando/app/core/utils/custom_colors.dart';
 
 import 'stores/get_highlighted_tours_store.dart';
@@ -14,12 +15,16 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
-  final store = locator.get<GetHighlightedToursStore>();
+  final getStore = locator.get<GetHighlightedToursStore>();
+  final locationStore = locator.get<LocationStore>();
 
   @override
   void initState() {
     super.initState();
-    store.getHighlightedTours();
+    getStore.getHighlightedTours();
+    locationStore.addListener(() {
+      getStore.getHighlightedTours();
+    });
   }
 
   @override
@@ -31,7 +36,7 @@ class _ListPageState extends State<ListPage> {
           horizontal: MediaQuery.of(context).size.width * 0.05,
         ),
         child: ValueListenableBuilder(
-          valueListenable: store,
+          valueListenable: getStore,
           builder: (context, GetHighlightedToursState state, child) {
             if (state is GetHighlightedToursLoadingState) {
               return const Center(child: CircularProgressIndicator());
@@ -73,7 +78,7 @@ class _ListPageState extends State<ListPage> {
               );
             }
 
-            final value = store as GetHighlightedToursErrorState;
+            final value = getStore as GetHighlightedToursErrorState;
 
             return Center(child: Text(value.message));
           },
