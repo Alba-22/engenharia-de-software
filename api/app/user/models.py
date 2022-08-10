@@ -1,3 +1,5 @@
+from uuid import UUID
+
 import bcrypt
 from pydantic import BaseModel, EmailStr, SecretStr, constr
 
@@ -37,6 +39,7 @@ class UserIn(BaseModel):
 
 
 class UserOut(BaseModel):
+    id: UUID
     name: str
     email: str
     phone: str | None

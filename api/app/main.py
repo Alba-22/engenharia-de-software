@@ -5,6 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app import depend
+from app.location import router as location_router
 from app.response import NO_CONTENT, ResponseException, response_exception_handler
 from app.user import router as user_router
 
@@ -31,7 +32,8 @@ def generic_exception_handler(_: Request, _exc: Exception):
     )
 
 
-app.include_router(user_router, prefix="/user", tags=["user"])
+app.include_router(user_router, prefix="/users", tags=["user"])
+app.include_router(location_router, prefix="/locations", tags=["location"])
 
 
 @app.get("/", status_code=204)
