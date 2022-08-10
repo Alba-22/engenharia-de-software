@@ -43,7 +43,7 @@ def test_login(test_client: TestClient, user_in_db: User):
         },
     ]
     for test_case in test_cases:
-        response = test_client.post("/user/login", data=test_case["input"])
+        response = test_client.post("/users/login", data=test_case["input"])
         response_json = response.json()
         expected_status_code, expected_json = test_case["expected"]
         assert response.status_code == expected_status_code
@@ -93,7 +93,7 @@ def test_post_new_user(test_client: TestClient, database: Session):
 
     try:
         for test_case in test_cases:
-            response = test_client.post("user/new", json=test_case["input"])
+            response = test_client.post("users/new", json=test_case["input"])
             assert response.status_code == test_case["expected_out"]
     finally:
         database.execute(delete(User))
@@ -114,6 +114,7 @@ def test_get_user(test_client: TestClient, user_in_db: User):
             "expected_out": (
                 200,
                 {
+                    "id": str(user_in_db.id),
                     "name": "Usuário Teste da Silva",
                     "email": "usuario@teste.io",
                     "phone": "912345678",
@@ -130,5 +131,5 @@ def test_get_user(test_client: TestClient, user_in_db: User):
         },
     ]
     for test_case in test_cases:
-        response = test_client.get(f"user/{test_case['input']}")
+        response = test_client.get(f"users/{test_case['input']}")
         assert (response.status_code, response.json()) == test_case["expected_out"]
