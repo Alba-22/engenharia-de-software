@@ -2,6 +2,8 @@ import bcrypt
 import pytest
 from sqlalchemy.orm import Session
 
+from app.auth import create_access_token
+from app.depend import settings
 from app.entities import Picture, User
 
 testing_password = bcrypt.hashpw("Abcd1234#".encode("utf-8"), bcrypt.gensalt()).decode(
@@ -23,3 +25,8 @@ def user_in_db(database: Session):
     yield user
     database.delete(user)
     database.commit()
+
+
+def authorization_header(user: User):
+    token = create_access_token(settings(), user.id)
+    return {"Authorization": f"Bearer {token}"}

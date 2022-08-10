@@ -1,6 +1,8 @@
 from fastapi.testclient import TestClient
+from sqlalchemy.orm import Session
 
-from app.entities import Location
+from app.entities import Location, User
+from tests.user.conftest import authorization_header, user_in_db
 
 
 def test_get_locations(test_client: TestClient, locations_in_db: list[Location]):
@@ -28,5 +30,18 @@ def test_get_location(test_client: TestClient, locations_in_db: list[Location]):
                 assert response_json["pictures"][0]["content"] == f"url_{i+1}"
 
 
-def test_post_location_review(test_client: TestClient, locations_in_db: list[Location]):
-    ...
+def test_post_location_review(
+    database: Session,
+    test_client: TestClient,
+    locations_in_db: list[Location],
+    user_in_db: User,
+):
+    location = locations_in_db[0]
+    response = test_client.post(
+        f"/locations/{location.id}/review?rate=5",
+        headers=authorization_header(user_in_db),
+    )
+    assert response.status_code == 201
+    database.refresh(location)
+    assert len(location.reviews) == 1
+    assert location.reviews[0].rate == 5
