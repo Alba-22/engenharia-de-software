@@ -1,0 +1,22 @@
+{
+  "configurations": [
+    {
+      "name": "dev",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--dart-define=BASE_URL=",
+        "--dart-define=PREVIEW_ENABLED=false",
+      ]
+    },
+    {
+      "name": "dev-preview",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--dart-define=BASE_URL=",
+        "--dart-define=PREVIEW_ENABLED=true",
+      ]
+    }
+  ]
+}
