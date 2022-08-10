@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 from app import depend
 from app.location import router as location_router
 from app.response import NO_CONTENT, ResponseException, response_exception_handler
+from app.tour import router as tour_router
 from app.user import router as user_router
 
 app = FastAPI(title="Turistando API", version="Terno Rei")
@@ -34,6 +35,7 @@ def generic_exception_handler(_: Request, _exc: Exception):
 
 app.include_router(user_router, prefix="/users", tags=["user"])
 app.include_router(location_router, prefix="/locations", tags=["location"])
+app.include_router(tour_router, prefix="/tours", tags=["tours"])
 
 
 @app.get("/", status_code=204)
