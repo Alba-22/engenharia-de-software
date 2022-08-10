@@ -24,5 +24,5 @@ class Picture(Base):
         "User", back_populates="profile_picture", uselist=False
     )
     locations: list[Location] = relationship(
-        "Location", secondary=location_picture_table, back_populates="picturess"
+        "Location", secondary=location_picture_table, back_populates="pictures"
     )
